@@ -26,6 +26,6 @@
 
 (defn -main []
   (let [text (str/trim (slurp "input/1.txt"))
-       seq (map #(Integer/parseInt %) (str/split text #""))]
+        seq (map #(Integer/parseInt %) (str/split text #""))]
    (println (sum-next seq))
    (println (sum-halfway seq))))
