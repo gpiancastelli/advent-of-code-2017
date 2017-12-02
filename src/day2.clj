@@ -11,7 +11,7 @@
         v (vec (rest row))
         i (atom 0)
         res (atom 0)]
-    (while (and (< @i (count v)) (== @res 0))
+    (while (and (< @i (count v)) (zero? @res))
       (do
         (let [el (get v @i)
               mx (max el pivot)
