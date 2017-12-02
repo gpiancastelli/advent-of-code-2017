@@ -1,0 +1,36 @@
+(ns day2
+  (:require [clojure.string :as str]))
+
+(defn row-diff [row]
+  (let [row-max (apply max row)
+        row-min (apply min row)]
+    (- row-max row-min)))
+
+(defn checksum-diffs [rows]
+  (apply + (map row-diff rows)))
+
+(defn row-division [row]
+  (let [pivot (first row)
+        v (vec (rest row))
+        i (atom 0)
+        res (atom 0)]
+    (while (and (< @i (count v)) (== @res 0))
+      (do
+        (let [el (get v @i)
+              mx (max el pivot)
+              mn (min el pivot)]
+          (reset! res (if (zero? (mod mx mn)) (/ mx mn) 0)))
+        (swap! i inc)))
+    ;; this never results in an infinite recursion because we
+    ;; are guaranteed that a divisible couple always exists
+    (if (pos? @res) @res (row-division (rest row)))))
+
+(defn checksum-divisions [rows]
+  (apply + (map row-division rows)))
+
+(defn -main []
+  (let [text (str/trim (slurp "input/2.txt"))
+        text-rows (str/split text #"\n")
+        rows (map (fn [row] (map #(Integer/parseInt %) (str/split row #"\s+"))) text-rows)]
+    (println (checksum-diffs rows))
+    (println (checksum-divisions rows))))
