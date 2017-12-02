@@ -6,9 +6,6 @@
         row-min (apply min row)]
     (- row-max row-min)))
 
-(defn checksum-diffs [rows]
-  (apply + (map row-diff rows)))
-
 (defn row-division [row]
   (let [pivot (first row)
         v (vec (rest row))
@@ -25,12 +22,12 @@
     ;; are guaranteed that a divisible couple always exists
     (if (pos? @res) @res (row-division (rest row)))))
 
-(defn checksum-divisions [rows]
-  (apply + (map row-division rows)))
+(defn checksum [f rows]
+  (apply + (map f rows)))
 
 (defn -main []
   (let [text (str/trim (slurp "input/2.txt"))
         text-rows (str/split text #"\n")
         rows (map (fn [row] (map #(Integer/parseInt %) (str/split row #"\s+"))) text-rows)]
-    (println (checksum-diffs rows))
-    (println (checksum-divisions rows))))
+    (println (checksum row-diff rows))
+    (println (checksum row-division rows))))
