@@ -21,7 +21,7 @@
         (swap! i inc)))
     ;; this never results in an infinite recursion because we
     ;; are guaranteed that a divisible couple always exists
-    (if (pos? @res) @res (row-division (rest row)))))
+    (if (pos? @res) @res (recur (rest row)))))
 
 (defn checksum [f rows]
   (apply + (map f rows)))
