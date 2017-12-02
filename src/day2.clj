@@ -16,7 +16,8 @@
         (let [el (get v @i)
               mx (max el pivot)
               mn (min el pivot)]
-          (reset! res (if (zero? (mod mx mn)) (/ mx mn) 0)))
+          (when (zero? (mod mx mn))
+            (reset! res (/ mx mn))))
         (swap! i inc)))
     ;; this never results in an infinite recursion because we
     ;; are guaranteed that a divisible couple always exists
