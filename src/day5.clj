@@ -5,13 +5,12 @@
   [pos limit step-count maze offset-fn]
   (if (>= pos limit)
     step-count
-    (let [step (get maze pos)]
-      (recur
-        (+ pos step)
-        limit
-        (inc step-count)
-        (update-in maze [pos] offset-fn)
-        offset-fn))))
+    (recur
+      (+ pos (get maze pos))
+      limit
+      (inc step-count)
+      (update-in maze [pos] offset-fn)
+      offset-fn)))
 
 (defn -main []
   (let [maze (map #(Integer/parseInt %) (str/split (slurp "input/5.txt") #"\n"))
