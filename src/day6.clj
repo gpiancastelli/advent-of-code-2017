@@ -11,11 +11,9 @@
     @index))
 
 (defn redistribute [banks]
-  (let [index (atom (find-max-blocks-index banks))
-        num-blocks (get banks @index)
-        redistributed-banks (assoc banks @index 0)]
-    (loop [num-blocks num-blocks
-           banks redistributed-banks]
+  (let [index (atom (find-max-blocks-index banks))]
+    (loop [num-blocks (get banks @index)
+           banks (assoc banks @index 0)]
       (swap! index inc)
       (when (>= @index (count banks))
         (reset! index 0))
