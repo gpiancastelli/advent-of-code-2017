@@ -20,7 +20,7 @@
       (if (zero? num-blocks)
         banks
         (recur (dec num-blocks)
-               (assoc banks @index (inc (get banks @index))))))))
+               (update-in banks [@index] inc))))))
 
 (defn find-repetition [cycles configurations banks]
   (let [configuration banks]
