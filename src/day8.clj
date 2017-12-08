@@ -30,9 +30,7 @@
       (when (apply verify condition) (apply execute operation))
       (let [current-max-register-value
             (if (pos? (count registers)) (apply max (vals registers)) 0)]
-        (if (> current-max-register-value max-register-value)
-          current-max-register-value
-          max-register-value)))
+        (max current-max-register-value max-register-value)))
     0
     instructions))
 
